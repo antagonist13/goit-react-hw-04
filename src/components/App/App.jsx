@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react'
 export default function App() {
     const [query, setQuery] = useState('office')
     useEffect(() => {
-        console.log(query);
         async function fetchImages() {
       try {
           const data = await getImages( query );
