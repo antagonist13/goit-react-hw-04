@@ -15,6 +15,8 @@ export default function App() {
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalImgURL, setmodalImgURL] = useState('');
 
   useEffect(() => {
     async function fetchImages() {
@@ -38,7 +40,7 @@ export default function App() {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, page]);
-
+    
       const handleSearch = async (value) => {
     setQuery(value);
     setPage(1);
@@ -47,13 +49,21 @@ export default function App() {
       const handleLoadMore = async () => {
     setPage(page + 1);
     }
-    
+    const handleModalOpen = () => {
+        setModalIsOpen(true);
+    }
+    const handleModalClose = () => {
+        setModalIsOpen(false);
+    }
+    const handleModalImg = (url) => {
+        setmodalImgURL(url);
+    }
     return <div className={css.container}>
         <SearchBar setSearchData={handleSearch} />
         {isError && <ErrorMessage/>}
-        {photos.length > 0 && <ImageGallery photos={photos} />}
+        {photos.length > 0 && <ImageGallery photos={photos} modalOpen={handleModalOpen} setModalUrl={handleModalImg} />}
         {isLoading && <Loader />}
         {photos.length > 0 && !isLoading && <LoadMoreBtn loadMore={handleLoadMore} />}
-        <ImageModal />
+        <ImageModal modalIsOpen={modalIsOpen} onRequestClose={handleModalClose} modalUrl={modalImgURL} />
 </div>
 }
