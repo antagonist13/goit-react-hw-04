@@ -1,5 +1,6 @@
-export default function ImageGallery( { photo }) {
+import css from './ImageCard.module.css'
+export default function ImageGallery({ photo }) {
     return <div>
-        <img src={photo.urls.small} alt={photo.alt_description} />
+        <img className={css.galleryItemPhoto} src={photo.urls.small} alt={photo.alt_description} />
     </div>
 }

@@ -1,8 +1,10 @@
 import { Field, Form, Formik } from "formik";
 import toast, { Toaster } from 'react-hot-toast';
+import { SlMagnifier } from "react-icons/sl";
+import css from './SearchBar.module.css'
 
 export default function SearchBar({ setSearchData }) {
-  return <header>
+  return <header className={css.header}>
     <Formik
       initialValues={{ query: "" }}
       onSubmit={(values, actions) => {
@@ -13,18 +15,20 @@ export default function SearchBar({ setSearchData }) {
         }
         actions.resetForm();
       }}>
-      <Form>
+      <Form className={css.searchForm}>
         <Toaster
           position="top-left"
-          reverseOrder={false}/>
+          reverseOrder={false} />
+        <button type="submit" className={css.submitButton}><SlMagnifier /></button>
         <Field
             type="text"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            name="query">
+            name="query"
+          className={css.textField}
+        >
         </Field>
-        <button type="submit">Search</button>
         </Form>
       </Formik>
 </header>
