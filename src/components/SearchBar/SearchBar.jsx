@@ -9,12 +9,14 @@ export default function SearchBar({ setSearchData }) {
         if (values.query.trim(' ')) {
           setSearchData(values.query);
         } else {
-          toast.error('Required for filling!')
+          toast.error('Invalid request!')
         }
         actions.resetForm();
       }}>
       <Form>
-        <Toaster />
+        <Toaster
+          position="top-left"
+          reverseOrder={false}/>
         <Field
             type="text"
             autoComplete="off"

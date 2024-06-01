@@ -1,9 +1,11 @@
 import ImageCard from '../ImageCard/ImageCard'
-export default function ImageGallery() {
+export default function ImageGallery( { photos }) {
     return <ul>
-	{/* Набір елементів списку із зображеннями */}
-	<li>
-		<ImageCard />
-	</li>
+		{photos.map((photo) => (
+		<li key={photo.id}>
+				<ImageCard photo={photo} />
+		</li>
+	))}
+	
 </ul>
 }
