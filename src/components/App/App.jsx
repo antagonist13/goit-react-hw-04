@@ -9,19 +9,25 @@ import { getImages } from '/src/images-api.js'
 import { useEffect, useState } from 'react'
 
 export default function App() {
-    const [query, setQuery] = useState('office')
-    useEffect(() => {
-        console.log(query);
-        async function fetchImages() {
+    const [query, setQuery] = useState()
+    const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    async function fetchImages() {
       try {
-          const data = await getImages( query );
-          console.log(data);
+        const data = await getImages(query);
+        console.log(data);
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
-        }
-        fetchImages()
-    }, [query])
+    }
+    if (isMounted) {
+        fetchImages();
+    } else {
+      setIsMounted(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
     return <div className={css.container}>
         <SearchBar setSearchData={setQuery} />

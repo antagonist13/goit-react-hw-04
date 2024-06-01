@@ -1,14 +1,20 @@
 import { Field, Form, Formik } from "formik";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function SearchBar({ setSearchData }) {
   return <header>
     <Formik
       initialValues={{ query: "" }}
       onSubmit={(values, actions) => {
-        setSearchData(values.query);
+        if (values.query.trim(' ')) {
+          setSearchData(values.query);
+        } else {
+          toast.error('Required for filling!')
+        }
         actions.resetForm();
       }}>
-        <Form>
+      <Form>
+        <Toaster />
         <Field
             type="text"
             autoComplete="off"
