@@ -13,6 +13,7 @@ export default function App() {
     const [isMounted, setIsMounted] = useState(false);
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -23,9 +24,9 @@ export default function App() {
         try {
         setIsLoading(true);
         setIsError(false);
-        const data = await getImages(query, page);
-          console.log(data);
-          setPhotos((prevState) => [...prevState, ...data]);
+        const list = await getImages(query, page);
+            setPhotos((prevState) => [...prevState, ...list.data.results]);
+            setTotalPages(list.data.total_pages)
       } catch (error) {
             console.log(error);
             setIsError(true);
@@ -63,7 +64,7 @@ export default function App() {
         {isError && <ErrorMessage/>}
         {photos.length > 0 && <ImageGallery photos={photos} modalOpen={handleModalOpen} setModalUrl={handleModalImg} />}
         {isLoading && <Loader />}
-        {photos.length > 0 && !isLoading && <LoadMoreBtn loadMore={handleLoadMore} />}
+        {photos.length > 0 && !isLoading && page < totalPages && <LoadMoreBtn loadMore={handleLoadMore} />}
         <ImageModal modalIsOpen={modalIsOpen} onRequestClose={handleModalClose} modalUrl={modalImgURL} />
 </div>
 }

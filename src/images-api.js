@@ -14,6 +14,5 @@ export const getImages = async ( query, page) => {
             Authorization: `Client-ID ${ACESS_KEY}`,
           },
   });
-
-  return response.data.results;
+  return response;
 };
